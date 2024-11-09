@@ -1,14 +1,15 @@
-#import the necessary module!
-from plyer import notification # type: ignore
+from win10toast import ToastNotifier
+import feedparser
+import time
 
+toaster = ToastNotifier()
 
-#specify the parameters
-title = 'Hello Amazing people!'
+fp = feedparser.parse("https://timesofindia.indiatimes.com/world")
+for news in fp['items']:
+    toaster.showtoast(
+        title=news['title'],
+        msg=news['summary'],
+        duration=5
+    )    
 
-message= 'Thankyou for reading! Take care!'
-
-notification.notify(title= title,
-                    message= message,
-                    app_icon = None,
-                    timeout= 10,
-                    toast=False)
+    time.sleep(10)
